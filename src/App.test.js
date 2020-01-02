@@ -1,4 +1,4 @@
-import data from './data.json';
+import data from '../data.json';
 import Draw from './libs/draw';
 
 data.forEach(row => {
