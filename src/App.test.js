@@ -6,9 +6,7 @@ data.forEach(row => {
     let args = row.input.split(",").map(number => parseInt(number));
 
     test("drawing the matrix with " + row.input, () => {
-        if (JSON.stringify(Draw.apply(this, args)) === JSON.stringify(row.pixelArrayJson)) {
-            throw new Error("Failed");
-        }
+        expect(JSON.stringify(Draw.apply(this, args))).toEqual(row.pixelArrayJson);
     });
 });
 
