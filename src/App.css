@@ -45,7 +45,7 @@
 
 .errors
 {
-    display: none;
+    display: block;
     background: #ad2121;
     color: white;
     position: fixed;
@@ -54,8 +54,4 @@
     right: 40%;
     list-style: none;
     padding: 0 10px;
-}
-
-.errors.active {
-    display: block;
 }

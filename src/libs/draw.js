@@ -7,6 +7,7 @@
  */
 module.exports = (width, height, padding) => {
 
+
     // Arguments validation.
     if (width < 20) throw new Error("Width value should be greater than 20.");
     if (Math.abs(width % 2) == 1) throw new Error("Width value should be even.");
@@ -27,8 +28,6 @@ module.exports = (width, height, padding) => {
          * Draw the inner shapes
          */
         if (width <= padding + 2 || height <= padding + 2) {
-            // if (width <= 0 || height <= 0) return [];
-            // if (height < 2) return [Array(width).fill(1)];
             return [
                 [2, ...Array(width - 2).fill(1), 2],
                 ...Array.from(Array( height - 2), () => width < 2 ? [2] : [2, ...Array( width - 2).fill(0), 2]),

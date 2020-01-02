@@ -50,7 +50,7 @@ export default class App extends React.Component {
      */
     draw(e) {
 
-        if(e) e.preventDefault();
+        if (e) e.preventDefault();
 
         let {width, height, padding} = this.state
 
@@ -60,15 +60,13 @@ export default class App extends React.Component {
             padding: parseInt(padding)
         })
 
-        if (!this.validate()) {
-            return false;
-        }
+        if (!this.validate()) return false;
 
         let matrix = drawer(this.state.width, this.state.height, parseInt(this.state.padding));
 
-        let output = matrix.map(row => row.map(item => this.pixelEnum[item]).join("")).join("\n")
-
-        this.setState({output});
+        this.setState({
+            output: matrix.map(row => row.map(item => this.pixelEnum[item]).join("")).join("\n")
+        });
     }
 
     componentDidMount() {
@@ -110,7 +108,7 @@ export default class App extends React.Component {
                     </form>
                 </div>
                 <pre className="output">{output}</pre>
-                {errors.length ? <div className="errors active">
+                {errors.length ? <div className="errors">
                     {
                         errors.map(error => {
                             return <p key={error}> {error} </p>
