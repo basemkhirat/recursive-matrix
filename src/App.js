@@ -13,7 +13,7 @@ export default class App extends React.Component {
     }
 
     /**
-     * pixel translations
+     * pixel translation
      * @type {string[]}
      */
     pixelEnum = [
@@ -31,13 +31,13 @@ export default class App extends React.Component {
         let errors = [], {width, height, padding} = this.state;
 
         if (width < 20) errors.push("Width value should be greater than 20.");
-        if (Math.abs(width % 2) == 1) errors.push("Width value should be even.");
+        if (Math.abs(width % 2) === 1) errors.push("Width value should be even.");
 
         if (height < 20) errors.push("Height value should be greater than 20.");
-        if (Math.abs(height % 2) == 1) errors.push("Height value should be even.");
+        if (Math.abs(height % 2) === 1) errors.push("Height value should be even.");
 
         if (padding < 4) errors.push("Padding value should be greater than or equal 4.");
-        if (Math.abs(padding % 2) == 1) errors.push("Padding value should be even.");
+        if (Math.abs(padding % 2) === 1) errors.push("Padding value should be even.");
 
         this.setState({errors});
         return errors.length ? false : true;
@@ -82,7 +82,6 @@ export default class App extends React.Component {
         let {width, height, padding, errors, output} = this.state;
 
         return (
-
             <div className="wrapper">
                 <div className="container">
                     <form className="form" onSubmit={e => this.draw(e)}>
