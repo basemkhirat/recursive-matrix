@@ -22,7 +22,7 @@ Open [http://localhost:3000](http://localhost:3000) to view the react app.
 npm test
 ```
 
-### Time Complexity: O(1)
+### Time Complexity: O(n)
 
 ### Screenshots
 
