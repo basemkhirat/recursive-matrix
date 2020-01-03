@@ -24,7 +24,7 @@ npm test
 
 ### Time Complexity: O(1)
 
-## Screenshots
+### Screenshots
 
 #### - Width=20, height=40, padding=6
 
