@@ -4,7 +4,7 @@
 
 ## Infinite recursive shape
 
-## Installation
+### Installation
 
 ```bash
 git clone https://github.com/basemkhirat/recursive-matrix
@@ -16,11 +16,13 @@ Development server will be started at port 3000.
 
 Open [http://localhost:3000](http://localhost:3000) to view the react app.
 
-## Testing
+### Testing
 
 ```bash
 npm test
 ```
+
+### Time Complexity: O(1)
 
 ## Screenshots
 

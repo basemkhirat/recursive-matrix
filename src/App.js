@@ -5,7 +5,7 @@ import drawer from './libs/draw';
 export default class App extends React.Component {
 
     state = {
-        width: 120,
+        width: 140,
         height: 80,
         padding: 6,
         output: "",
@@ -52,17 +52,9 @@ export default class App extends React.Component {
 
         if (e) e.preventDefault();
 
-        let {width, height, padding} = this.state
-
-        this.setState({
-            width: parseInt(width),
-            height: parseInt(height),
-            padding: parseInt(padding)
-        })
-
         if (!this.validate()) return false;
 
-        let matrix = drawer(this.state.width, this.state.height, parseInt(this.state.padding));
+        let matrix = drawer(this.state.width, this.state.height, this.state.padding);
 
         this.setState({
             output: matrix.map(row => row.map(item => this.pixelEnum[item]).join("")).join("\n")

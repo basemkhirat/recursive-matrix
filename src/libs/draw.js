@@ -7,6 +7,10 @@
  */
 module.exports = (width, height, padding) => {
 
+    width = parseInt(width);
+    height = parseInt(height);
+    padding = parseInt(padding);
+
     // Arguments validation.
     if (width < 20) throw new Error("Width value should be greater than 20.");
     if (Math.abs(width % 2) === 1) throw new Error("Width value should be even.");
@@ -17,61 +21,28 @@ module.exports = (width, height, padding) => {
     if (padding < 4) throw new Error("Padding value should be greater than or equal 4.");
     if (Math.abs(padding % 2) === 1) throw new Error("Padding value should be even.");
 
-    /**
-     * Self-invoked function
-     * to fill the matrix
-     */
-    return (function fill(width, height, padding) {
+    let matrix = Array(height).fill(0).map(x => Array(width).fill(0));
 
-        /**
-         * Draw the the shape of the center if possible
-         */
-        if (width <= padding + 2 || height <= padding + 2) {
-            return [
-                // generate the first line
-                [2, ...Array(width - 2).fill(1), 2],
+    return (function render(width, height, x = 0, y = 0) {
 
-                // generate the next lines if possible
-                ...Array.from(Array( height - 2), () => width < 2 ? [2] : [2, ...Array( width - 2).fill(0), 2]),
+        if (width < 1 || height < 1) return matrix;
 
-                // generate the last line
-                [2, ...Array(width - 2).fill(1), 2],
-            ];
+        for (let i = x; i < x + width; ++i) {
+            matrix[x][i] = 1;
+            matrix[x + height - 1][i] = 1;
         }
-        /**
-         * Draw the main outer shape
-         */
-        return [
 
-            // generate the first line
-            [2, ...Array(width - 2).fill(1), 2],
+        for (let j = y; j < y + height; ++j) {
+            matrix[j][y] = 2;
+            matrix[j][y + width - 1] = 2;
+        }
 
-            // generate the next lines until we have the first inner shape.
-            ...Array.from(Array(padding / 2), () => [2, ...Array(width - 2).fill(0), 2]),
+        return render(
+            width - padding - 2,
+            height - padding - 2,
+            x + padding / 2 + 1,
+            y + padding / 2 + 1
+        );
 
-            /**
-             * Call the recursion function to
-             * generate the inner shapes recursively
-             * -2 to ignore the start/end item in row
-             */
-            ...fill(width - padding - 2, height - padding - 2, padding)
-                .map(box => {
-                        return [
-                            2,
-                            ...Array(padding / 2).fill(0),
-                            ...box,
-                            ...Array(padding / 2).fill(0),
-                            2
-                        ];
-                    }
-                ),
-
-            // generate the next lines until the pre last line.
-            ...Array.from(Array(padding / 2), () => [2, ...Array(width - 2).fill(0), 2]),
-
-            // generate the last line
-            [2, ...Array(width - 2).fill(1), 2],
-        ];
-
-    })(width, height, padding);
+    }(width, height));
 }
