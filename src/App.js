@@ -9,7 +9,7 @@ export default class App extends React.Component {
         height: 80,
         padding: 6,
         output: "",
-        errors: []
+        error: null
     }
 
     /**
@@ -23,27 +23,6 @@ export default class App extends React.Component {
     ];
 
     /**
-     * Validate form inputs
-     * @returns {boolean}
-     */
-    validate() {
-
-        let errors = [], {width, height, padding} = this.state;
-
-        if (width < 20) errors.push("Width value should be greater than 20.");
-        if (Math.abs(width % 2) === 1) errors.push("Width value should be even.");
-
-        if (height < 20) errors.push("Height value should be greater than 20.");
-        if (Math.abs(height % 2) === 1) errors.push("Height value should be even.");
-
-        if (padding < 4) errors.push("Padding value should be greater than or equal 4.");
-        if (Math.abs(padding % 2) === 1) errors.push("Padding value should be even.");
-
-        this.setState({errors});
-        return errors.length ? false : true;
-    }
-
-    /**
      * Draw the result.
      * @param e
      * @returns {boolean}
@@ -52,13 +31,18 @@ export default class App extends React.Component {
 
         if (e) e.preventDefault();
 
-        if (!this.validate()) return false;
-
-        let matrix = drawer(this.state.width, this.state.height, this.state.padding);
-
-        this.setState({
-            output: matrix.map(row => row.map(item => this.pixelEnum[item]).join("")).join("\n")
-        });
+        drawer(this.state.width, this.state.height, this.state.padding)
+            .then(
+                matrix => this.setState({
+                    output: matrix.map(row => row.map(item => this.pixelEnum[item]).join("")).join("\n"),
+                    error: null
+                })
+            )
+            .catch(
+                error => {
+                    this.setState({error});
+                }
+            )
     }
 
     componentDidMount() {
@@ -71,7 +55,7 @@ export default class App extends React.Component {
      */
     render() {
 
-        let {width, height, padding, errors, output} = this.state;
+        let {width, height, padding, error, output} = this.state;
 
         return (
             <div className="wrapper">
@@ -99,12 +83,8 @@ export default class App extends React.Component {
                     </form>
                 </div>
                 <pre className="output">{output}</pre>
-                {errors.length ? <div className="errors">
-                    {
-                        errors.map(error => {
-                            return <p key={error}> {error} </p>
-                        })
-                    }
+                {error ? <div className="errors">
+                    <p>{error}</p>
                 </div> : null}
             </div>
         );

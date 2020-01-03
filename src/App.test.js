@@ -1,13 +1,16 @@
 import data from '../data.json';
-import Draw from './libs/draw';
+import draw from './libs/draw';
 
 data.forEach(row => {
 
     let args = row.input.split(",").map(number => parseInt(number));
 
     test("drawing the matrix with " + row.input, () => {
-        expect(JSON.stringify(Draw.apply(this, args))).toEqual(row.pixelArrayJson);
+        draw.apply(this, args).then(data => {
+            expect(JSON.stringify(data)).toEqual(row.pixelArrayJson);
+        })
     });
 });
+
 
 
