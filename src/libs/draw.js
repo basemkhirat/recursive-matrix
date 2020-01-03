@@ -27,22 +27,32 @@ module.exports = (width, height, padding) => {
     if (padding < 4) return Promise.reject("Padding value should be greater than or equal 4.");
     if (Math.abs(padding % 2) === 1) return Promise.reject("Padding value should be even.");
 
-    let matrix = Array(height).fill(0).map(x => Array(width).fill(0));
+    let box = Array(height).fill(0).map(() => Array(width).fill(0));
 
     return (function render(width, height, x = 0, y = 0) {
 
-        if (width < 1 || height < 1) return matrix;
+        if (width < 1 || height < 1) return box;
 
-        // Draw rows
-        for (let i = x; i < x + width; ++i) {
-            matrix[x][i] = 1;
-            matrix[x + height - 1][i] = 1;
+        // Draw rows.
+        for (let i = x; i < width + x; ++i) {
+
+            // Draw the upper rows from up to down
+            box[x][i] = 1;
+
+            // Draw the below rows from bottom to up
+            box[x + height - 1][i] = 1;
         }
 
-        // Draw columns
-        for (let j = y; j < y + height; ++j) {
-            matrix[j][y] = 2;
-            matrix[j][y + width - 1] = 2;
+        // Draw columns.
+        // Here we override the first and last items in every row to '2'
+        // so that we can pass the test cases.
+        for (let j = y; j < height + y; ++j) {
+
+            // Draw the left columns from left to right
+            box[j][y] = 2;
+
+            // Draw the right columns from right to left
+            box[j][y + width - 1] = 2;
         }
 
         return Promise.resolve(render(
